@@ -1,5 +1,10 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :authorize_user]
+  # Only allow authenticated users to access these actions
+  before_action :authenticate_user!, except: [:index, :show]
+  # Only allow authorized users to access these actions
+  before_action :authorize_user, only: [:edit, :update, :destroy]
+
 
   # GET /restaurants
   # GET /restaurants.json
@@ -25,6 +30,7 @@ class RestaurantsController < ApplicationController
   # POST /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user = current_user
 
     respond_to do |format|
       if @restaurant.save
@@ -71,4 +77,10 @@ class RestaurantsController < ApplicationController
     def restaurant_params
       params.require(:restaurant).permit(:name, :address, :phone_number, :cuisine)
     end
+
+    def authorize_user
+    unless @restaurant.user == current_user
+      redirect_to restaurants_url, notice: 'No touchy!'
+    end
+  end
 end
