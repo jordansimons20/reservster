@@ -36,6 +36,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Devise for authentication / authorization
 gem 'devise'
 
+# Use paperclip to add images for restaurants
+gem "paperclip", "~> 5.2.1"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

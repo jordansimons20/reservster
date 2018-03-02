@@ -20,6 +20,11 @@
   <%= @restaurant.cuisine %>
 </p>
 
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @restaurant.photo.url(:medium) %>
+</p>
+
 <% if @restaurant.user == current_user %>
   <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <% end %>
